@@ -306,7 +306,9 @@ export const useTabbarStore = defineStore('core-tabbar', {
         (item) => getTabPath(item) === getTabPath(tab),
       );
       if (index !== -1) {
+        const oldTab = this.tabs[index];
         tab.meta.affixTab = true;
+        tab.meta.title = oldTab?.meta?.title as string;
         // this.addTab(tab);
         this.tabs.splice(index, 1, tab);
       }
@@ -334,7 +336,7 @@ export const useTabbarStore = defineStore('core-tabbar', {
      * @zh_CN 重置标签页标题
      */
     async resetTabTitle(tab: TabDefinition) {
-      if (!tab?.meta?.newTabTitle) {
+      if (tab?.meta?.newTabTitle) {
         return;
       }
       const findTab = this.tabs.find(
@@ -411,7 +413,9 @@ export const useTabbarStore = defineStore('core-tabbar', {
       );
 
       if (index !== -1) {
+        const oldTab = this.tabs[index];
         tab.meta.affixTab = false;
+        tab.meta.title = oldTab?.meta?.title as string;
         // this.addTab(tab);
         this.tabs.splice(index, 1, tab);
       }
