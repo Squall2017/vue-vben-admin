@@ -1,4 +1,6 @@
-import { type RouteRecordNormalized, useRouter } from 'vue-router';
+import type { RouteRecordNormalized } from 'vue-router';
+
+import { useRouter } from 'vue-router';
 
 import { isHttpUrl, openRouteInNewWindow, openWindow } from '@vben/utils';
 
@@ -27,7 +29,19 @@ function useNavigation() {
     }
   };
 
-  return { navigation };
+  const willOpenedByWindow = (path: string) => {
+    const route = routeMetaMap.get(path);
+    const { openInNewWindow = false } = route?.meta ?? {};
+    if (isHttpUrl(path)) {
+      return true;
+    } else if (openInNewWindow) {
+      return true;
+    } else {
+      return false;
+    }
+  };
+
+  return { navigation, willOpenedByWindow };
 }
 
 export { useNavigation };

@@ -3,6 +3,7 @@ import type { SetupVxeTable } from './types';
 import { defineComponent, watch } from 'vue';
 
 import { usePreferences } from '@vben/preferences';
+
 import { useVbenForm } from '@vben-core/form-ui';
 
 import {
@@ -16,6 +17,7 @@ import {
   VxeInput,
   VxeLoading,
   VxeModal,
+  VxeNumberInput,
   VxePager,
   // VxeList,
   // VxeModal,
@@ -33,7 +35,6 @@ import {
   // VxeTextarea,
 } from 'vxe-pc-ui';
 import enUS from 'vxe-pc-ui/lib/language/en-US';
-
 // 导入默认的语言
 import zhCN from 'vxe-pc-ui/lib/language/zh-CN';
 import {
@@ -82,6 +83,7 @@ export function initVxeTable() {
   // VxeUI.component(VxeList);
   VxeUI.component(VxeLoading);
   VxeUI.component(VxeModal);
+  VxeUI.component(VxeNumberInput);
   // VxeUI.component(VxeOptgroup);
   // VxeUI.component(VxeOption);
   VxeUI.component(VxePager);
@@ -104,7 +106,7 @@ export function setupVbenVxeTable(setupOptions: SetupVxeTable) {
   initVxeTable();
   useTableForm = useVbenForm;
 
-  const preference = usePreferences();
+  const { isDark, locale } = usePreferences();
 
   const localMap = {
     'zh-CN': zhCN,
@@ -112,11 +114,11 @@ export function setupVbenVxeTable(setupOptions: SetupVxeTable) {
   };
 
   watch(
-    [() => preference.theme.value, () => preference.locale.value],
-    ([theme, locale]) => {
-      VxeUI.setTheme(theme === 'dark' ? 'dark' : 'light');
-      VxeUI.setI18n(locale, localMap[locale]);
-      VxeUI.setLanguage(locale);
+    [() => isDark.value, () => locale.value],
+    ([isDarkValue, localeValue]) => {
+      VxeUI.setTheme(isDarkValue ? 'dark' : 'light');
+      VxeUI.setI18n(localeValue, localMap[localeValue]);
+      VxeUI.setLanguage(localeValue);
     },
     {
       immediate: true,

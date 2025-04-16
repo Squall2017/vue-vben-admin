@@ -1,4 +1,5 @@
 export * from './accordion';
+export * from './alert-dialog';
 export * from './avatar';
 export * from './badge';
 export * from './breadcrumb';
@@ -16,6 +17,7 @@ export * from './pagination';
 export * from './pin-input';
 export * from './popover';
 export * from './radio-group';
+export * from './resizable';
 export * from './scroll-area';
 export * from './select';
 export * from './separator';
@@ -26,3 +28,4 @@ export * from './textarea';
 export * from './toggle';
 export * from './toggle-group';
 export * from './tooltip';
+export * from './tree';

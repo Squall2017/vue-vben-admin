@@ -46,6 +46,7 @@ const defaultPreferences: Preferences = {
   header: {
     enable: true,
     hidden: false,
+    menuAlign: 'start',
     mode: 'fixed',
   },
   logo: {
@@ -65,11 +66,14 @@ const defaultPreferences: Preferences = {
     globalSearch: true,
   },
   sidebar: {
+    autoActivateChild: false,
     collapsed: false,
+    collapsedButton: true,
     collapsedShowTitle: false,
     enable: true,
     expandOnHover: true,
-    extraCollapse: true,
+    extraCollapse: false,
+    fixedButton: true,
     hidden: false,
     width: 224,
   },
@@ -78,11 +82,14 @@ const defaultPreferences: Preferences = {
     enable: true,
     height: 38,
     keepAlive: true,
+    maxCount: 0,
+    middleClickToClose: false,
     persist: true,
     showIcon: true,
     showMaximize: true,
     showMore: true,
     styleType: 'chrome',
+    wheelable: true,
   },
   theme: {
     builtinType: 'default',
