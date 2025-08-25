@@ -34,7 +34,6 @@ const props = withDefaults(defineProps<AlertProps>(), {
   bordered: true,
   buttonAlign: 'end',
   centered: true,
-  containerClass: 'w-[520px]',
 });
 const emits = defineEmits(['closed', 'confirm', 'opened']);
 const open = defineModel<boolean>('open', { default: false });
@@ -44,6 +43,10 @@ const isConfirm = ref(false);
 
 function onAlertClosed() {
   emits('closed', isConfirm.value);
+  isConfirm.value = false;
+}
+
+function onEscapeKeyDown() {
   isConfirm.value = false;
 }
 
@@ -91,14 +94,13 @@ const getIconRender = computed(() => {
 });
 
 function doCancel() {
-  isConfirm.value = false;
+  handleCancel();
   handleOpenChange(false);
 }
 
 function doConfirm() {
-  isConfirm.value = true;
+  handleConfirm();
   handleOpenChange(false);
-  emits('confirm');
 }
 
 provideAlertContext({
@@ -117,7 +119,7 @@ function handleCancel() {
 
 const loading = ref(false);
 async function handleOpenChange(val: boolean) {
-  await nextTick();
+  await nextTick(); // 等待标记isConfirm状态
   if (!val && props.beforeClose) {
     loading.value = true;
     try {
@@ -141,10 +143,11 @@ async function handleOpenChange(val: boolean) {
       :overlay-blur="overlayBlur"
       @opened="emits('opened')"
       @closed="onAlertClosed"
+      @escape-key-down="onEscapeKeyDown"
       :class="
         cn(
           containerClass,
-          'left-0 right-0 mx-auto flex max-h-[80%] flex-col p-0 duration-300 sm:rounded-[var(--radius)] md:w-[520px] md:max-w-[80%]',
+          'left-0 right-0 mx-auto flex max-h-[80%] flex-col p-0 duration-300 sm:w-[520px] sm:max-w-[80%] sm:rounded-[var(--radius)]',
           {
             'border-border border': bordered,
             'shadow-3xl': !bordered,

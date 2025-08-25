@@ -56,10 +56,19 @@ Modal 内的内容一般业务中，会比较复杂，所以我们可以将 moda
 
 <DemoPreview dir="demos/vben-modal/shared-data" />
 
+## 动画类型
+
+通过 `animationType` 属性可以控制弹窗的动画效果：
+
+- `slide`（默认）：从顶部向下滑动进入/退出
+- `scale`：缩放淡入/淡出效果
+
+<DemoPreview dir="demos/vben-modal/animation-type" />
+
 ::: info 注意
 
 - `VbenModal` 组件对与参数的处理优先级是 `slot` > `props` > `state`(通过api更新的状态以及useVbenModal参数)。如果你已经传入了 `slot` 或者 `props`，那么 `setState` 将不会生效，这种情况下你可以通过 `slot` 或者 `props` 来更新状态。
-- 如果你使用到了 `connectedComponent` 参数，那么会存在 2 个`useVbenModal`, 此时，如果同时设置了相同的参数，那么以内部为准（也就是没有设置 connectedComponent 的代码）。比如 同时设置了 `onConfirm`，那么以内部的 `onConfirm` 为准。`onOpenChange`事件除外，内外都会触发。
+- 如果你使用到了 `connectedComponent` 参数，那么会存在 2 个`useVbenModal`, 此时，如果同时设置了相同的参数，那么以内部为准（也就是没有设置 connectedComponent 的代码）。比如 同时设置了 `onConfirm`，那么以内部的 `onConfirm` 为准。`onOpenChange`事件除外，内外都会触发。另外，如果设置了`destroyOnClose`，内部Modal及其子组件会在被关闭后<b>完全销毁</b>。
 - 如果弹窗的默认行为不符合你的预期，可以在`src\bootstrap.ts`中修改`setDefaultModalProps`的参数来设置默认的属性，如默认隐藏全屏按钮，修改默认ZIndex等。
 
 :::
@@ -112,6 +121,7 @@ const [Modal, modalApi] = useVbenModal({
 | bordered | 是否显示border | `boolean` | `false` |
 | zIndex | 弹窗的ZIndex层级 | `number` | `1000` |
 | overlayBlur | 遮罩模糊度 | `number` | - |
+| animationType | 动画类型 | `'slide' \| 'scale'` | `'slide'` |
 | submitting | 标记为提交中，锁定弹窗当前状态 | `boolean` | `false` |
 
 ::: info appendToMain
